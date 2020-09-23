@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+      <table class="board-table table table-sm border-bottom">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Sprite</th>
+            <th scope="col">Alchohol</th>
+            <th scope="col">Sweet</th>
+            <th scope="col">Sour</th>
+            <th scope="col">Bitter</th>
+            <th scope="col">Recommend</th>
+            <th scope="col">Ingredient</th>
+            <th scope="col">Thema</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if(cocktails == null){ %>
+          <tr>
+            <td colspan="8">There is no data to show :(</td>
+          </tr>
+          <% } %>
+          <!--  -->
+          <% cocktails.forEach(function(cocktail) { %>
+          <tr>
+            <td>
+              <a href="/cocktails/<%= cocktail._id %>"><div class="ellipsis"><%= cocktail.name %></div></a>
+            </td>
+            <!-- <td><img src="이미지경로"></td> -->
+            <td><img src="/images/<%= cocktail.name %>.jpg" width="80" height="100" /></td>
+            <td><%= cocktail.sprite %></td>
+            <td><%= cocktail.alchohol %></td>
+            <td><%= cocktail.sweet %></td>
+            <td><%= cocktail.sour %></td>
+            <td><%= cocktail.bitter %></td>
+            <td><%= cocktail.recommend %></td>
+            <td>
+              <% if(cocktail.ingredient != null){ %>
+              <!--  -->
+              <% for(var i = 0; i < cocktail.ingredient.length; i++) { %>
+              <p><%= cocktail.ingredient[i].name %></p>
+              <% } %>
+              <!--  -->
+              <% } %>
+            </td>
+            <td>
+              <% if(cocktail.thema != null){ %>
+              <!--  -->
+              <% for(var i = 0; i < cocktail.thema.length; i++) { %>
+              <p><%= cocktail.thema[i].name %></p>
+              <% } %>
+              <!--  -->
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+      <div class="jumbotron">
+        <h1>"모두의 칵테일"</h1>
+      </div>
+    </div>
+
+    <h3 class="ml-5">Search Cocktail(이름검색)</h3>
+    <div class="mt-3 ml-5">
+      <form action="/cocktails" method="get">
+        <p>searchBy <input type="text" name="searchBy" /></p>
+        <button type="submit">button</button>
+      </form>
+    </div>
+
+    <h3 class="mt-5 ml-5">Search Cocktail(상세검색)</h3>
+    <div class="mt-3 ml-5">
+      <form action="/cocktails" method="get">
+        <p>
+          sprite <input type="checkbox" name="sprite" value="true" /> O &nbsp&nbsp
+          <!--  -->
+          <input type="checkbox" name="sprite" value="false" /> X
+        </p>
+        <p>alchohol <input type="text" name="alchohol" /></p>
+        <p>sweet <input type="text" name="sweet" /></p>
+        <p>sour <input type="text" name="sour" /></p>
+        <p>bitter <input type="text" name="bitter" /></p>
+        <button type="submit">button</button>
+      </form>
+    </div>
+
+    <h3 class="ml-5 mt-5">New Cocktail(칵테일추가)</h3>
+    <div class="mt-3 ml-5">
+      <form action="/cocktails/new" method="post">
+        <p>
+          recommend <input type="checkbox" name="recommend" value="true" /> O &nbsp&nbsp
+          <!--  -->
+          <input type="checkbox" name="recommend" value="false" /> X
+        </p>
+        <p>
+          sprite <input type="checkbox" name="sprite" value="true" /> O &nbsp&nbsp
+          <!--  -->
+          <input type="checkbox" name="sprite" value="false" /> X
+        </p>
+        <p>name <input type="text" name="name" /></p>
+        <p>alchohol <input type="text" name="alchohol" /></p>
+        <p>sweet <input type="text" name="sweet" /></p>
+        <p>sour <input type="text" name="sour" /></p>
+        <p>bitter <input type="text" name="bitter" /></p>
+        <button type="submit">button</button>
+      </form>
+    </div>
+
+    <h3 class="ml-5 mt-5">New Ingredient(재료추가)</h3>
+    <div class="mt-3 ml-5">
+      <form action="/cocktails/newingredient" method="post">
+        <p>name <input type="text" name="name" /></p>
+        <button type="submit">button</button>
+      </form>
+    </div>
+
+    <h3 class="ml-5 mt-5">New Thema(테마추가)</h3>
+    <div class="mt-3 ml-5">
+      <form action="/cocktails/newthema" method="post">
+        <p>name <input type="text" name="name" /></p>
+        <button type="submit">button</button>
+      </form>
+    </div>
+  </body>
+</html>
