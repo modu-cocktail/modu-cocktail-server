@@ -7,7 +7,15 @@
     <%- include('../partials/nav') %>
 
     <div class="container mb-3">
-      <p>user like</p>
+      <h3>Like List</h3>
+      <% if(user.like != null) { %>
+      <!--  -->
+      <p><%= user.like.length %></p>
+      <% for(var i = 0; i < user.like.length; i++) { %>
+      <p><%= user.like[i].name %></p>
+      <% } %>
+      <!--  -->
+      <% } %>
     </div>
   </body>
 </html>

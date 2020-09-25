@@ -6,24 +6,21 @@ var Ingredient = require("../models/Ingredient");
 var Thema = require("../models/Thema");
 
 // 칵테일에 재료, 테마 추가
-router.get("/select", function (req, res) {
-  Cocktail.find({}, function (err, cocktails) {
-    Ingredient.find({}, function (err, ingredients) {
-      Thema.find({}, function (err, themas) {
-        res.render("cocktails/select", { cocktails: cocktails, ingredients: ingredients, themas: themas });
-      });
-    });
-  });
+router.get("/select", async function (req, res) {
+  var cocktails = await Cocktail.find({});
+  var ingredients = await Ingredient.find({});
+  var themas = await Thema.find({});
+
+  res.render("cocktails/select", { cocktails: cocktails, ingredients: ingredients, themas: themas });
 });
 
 router.get("/select/result", function (req, res) {
-  console.log(req.query.ingredient);
   Cocktail.findOneAndUpdate(
     { name: req.query.cocktail },
-    { $set: { ingredient: req.query.ingredient }, $set: { thema: req.query.thema } },
+    { $set: { ingredient: req.query.ingredient, thema: req.query.thema } },
     function (err, cocktail) {
+      // console.log(cocktail);
       res.redirect("/cocktails");
-      // res.send("111");
     }
   );
 });
@@ -53,7 +50,7 @@ router.get("/", function (req, res) {
     .sort("name")
     .exec(function (err, cocktails) {
       if (err) res.send(err);
-      console.log(cocktails);
+      // console.log(cocktails);
       res.render("cocktails/index", { cocktails: cocktails });
       // res.send(cocktails);
     });
@@ -61,7 +58,7 @@ router.get("/", function (req, res) {
 
 // Show(클릭시 -> 칵테일 상세보기)
 router.get("/:id", function (req, res) {
-  Cocktail.find({ _id: req.params.id }, function (err, cocktail) {
+  Cocktail.findOne({ _id: req.params.id }, function (err, cocktail) {
     if (err) res.send(err);
     res.render("cocktails/show", { cocktail: cocktail });
   });
@@ -78,7 +75,7 @@ router.post("/new", function (req, res) {
 
   Cocktail.create(req.body, function (err, cocktail) {
     if (err) res.send(err);
-    console.log(cocktail);
+    // console.log(cocktail);
     res.redirect("/");
   });
 });
@@ -87,7 +84,7 @@ router.post("/new", function (req, res) {
 router.post("/newingredient", function (req, res) {
   Ingredient.create(req.body, function (err, ingredient) {
     if (err) res.send(err);
-    console.log(ingredient);
+    // console.log(ingredient);
     res.redirect("/");
   });
 });
@@ -96,7 +93,7 @@ router.post("/newingredient", function (req, res) {
 router.post("/newthema", function (req, res) {
   Thema.create(req.body, function (err, thema) {
     if (err) res.send(err);
-    console.log(thema);
+    // console.log(thema);
     res.redirect("/");
   });
 });
@@ -107,7 +104,7 @@ function createSearchQuery(query) {
   var postQuery = [];
 
   // 첫번째 nav : 메뉴이름 검색
-  if (query.searchBy && query.searchBy.length >= 3) {
+  if (query.searchBy && query.searchBy.length >= 2) {
     postQuery.push({ name: { $regex: new RegExp(query.searchBy), $options: "i" } });
   }
   // 두번째 nav : 상세 맛 검색
@@ -124,7 +121,7 @@ function createSearchQuery(query) {
     searchQuery = { $and: postQuery };
   }
 
-  console.log(searchQuery);
+  console.log("searchQuery :", searchQuery);
   return searchQuery;
 }
 

@@ -20,13 +20,12 @@ passport.use(
       passReqToCallback: true,
     },
     function (req, accessToken, refreshToken, profile, done) {
-      console.log(profile);
-      User.findOne({ username: profile.id }, function (err, user) {
+      User.findOne({ email: profile.email }, function (err, user) {
         if (err) res.send(err);
         if (user) {
           done(null, user);
         } else {
-          var newUser = new User({ username: profile.id });
+          var newUser = new User({ email: profile.email });
           newUser.save(function (err, user) {
             if (err) res.send(err);
             done(null, user);
